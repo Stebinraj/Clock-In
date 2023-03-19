@@ -6,13 +6,14 @@ const ViewUsers = (props) => {
 
     const [apiData, setApiData] = useState([]);
     const token = sessionStorage.getItem('Token');
+    const [clicked, setClicked] = useState(false);
     const navigate = useNavigate();
 
     // delete specific employee
     const onDelete = async (e, _id) => {
         try {
             e.preventDefault();
-            const deleteData = await axios.delete(`/api/delete/${_id}`);
+            const deleteData = await axios.delete(`http://localhost:5000/api/delete/${_id}`);
             if (deleteData) {
                 alert('Deleted Successfully')
                 getData();
@@ -28,8 +29,9 @@ const ViewUsers = (props) => {
     // fetch employee list after deleted specific employee
     const getData = async () => {
         try {
-            const response = await axios.post('/api/users', { token });
+            const response = await axios.post('http://localhost:5000/api/users', { token });
             setApiData(response.data);
+            setClicked(false);
         } catch (error) {
             console.log(error.message);
         }
@@ -66,7 +68,7 @@ const ViewUsers = (props) => {
     useEffect(() => {
         const getData = async () => {
             try {
-                const response = await axios.post('/api/users', { token });
+                const response = await axios.post('http://localhost:5000/api/users', { token });
                 setApiData(response.data);
             } catch (error) {
                 console.log(error.message);
@@ -104,7 +106,15 @@ const ViewUsers = (props) => {
                                                 <button onClick={(e) => { updateUser(e, value) }} className='btn btn-outline-success'>Update</button>
                                             </td>
                                             <td>
-                                                <button className='btn btn-outline-danger' onClick={(e) => { onDelete(e, value._id) }}>Delete</button>
+                                                {clicked ? (
+                                                    <>
+                                                        <button className='btn btn-outline-danger'>Delete</button>
+                                                    </>
+                                                ) : (
+                                                    <>
+                                                        <button className='btn btn-outline-danger' onClick={(e) => { onDelete(e, value._id); setClicked(true) }}>Delete</button>
+                                                    </>
+                                                )}
                                             </td>
                                             <td>
                                                 <button onClick={(e) => { analyzeData(e, value) }} className='btn btn-outline-warning text-dark'>Analyse</button>

@@ -16,6 +16,7 @@ const TrackerHistory = (props) => {
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
     const [total, setTotal] = useState('');
+    const [clicked, setClicked] = useState(false);
 
     const [apiData, setApiData] = useState([]);
 
@@ -23,7 +24,7 @@ const TrackerHistory = (props) => {
     const handleRange = async (e) => {
         try {
             e.preventDefault();
-            const response = await axios.post(`/api/${_id}/${range}`, { token });
+            const response = await axios.post(`http://localhost:5000/api/${_id}/${range}`, { token });
             const result = await response.data;
             setApiData(result.data);
             setTotal(result.total);
@@ -37,7 +38,7 @@ const TrackerHistory = (props) => {
             e.preventDefault();
             const start = startDate.toISOString();
             const end = endDate.toISOString();
-            const response = await axios.post(`/api/${_id}/${start}/${end}`, { token });
+            const response = await axios.post(`http://localhost:5000/api/${_id}/${start}/${end}`, { token });
             const result = await response.data;
             setApiData(result.data);
             setTotal(result.total);
@@ -65,7 +66,7 @@ const TrackerHistory = (props) => {
     const deleteData = async (e, _id) => {
         try {
             e.preventDefault();
-            const deleted = await axios.delete(`/api/tracker/${_id}`);
+            const deleted = await axios.delete(`http://localhost:5000/api/tracker/${_id}`);
             if (deleted) {
                 alert('Deleted Successfully');
                 getData();
@@ -81,8 +82,9 @@ const TrackerHistory = (props) => {
     // fetch data after deleted specific employee tracker history
     const getData = async () => {
         try {
-            const response = await axios.post(`/api/tracker/${_id}`, { token });
+            const response = await axios.post(`http://localhost:5000/api/tracker/${_id}`, { token });
             setApiData(await response.data);
+            setClicked(false);
         } catch (error) {
             console.log(error.message);
         }
@@ -107,7 +109,7 @@ const TrackerHistory = (props) => {
         // fetch tracker history
         const getData = async () => {
             try {
-                const response = await axios.post(`/api/tracker/${_id}`, { token });
+                const response = await axios.post(`http://localhost:5000/api/tracker/${_id}`, { token });
                 setApiData(response.data);
             } catch (error) {
                 console.log(error.message);
@@ -169,8 +171,8 @@ const TrackerHistory = (props) => {
             {(props.roles === "user" && props.token) || (props.roles === "admin" && props.token) ? (
                 <>
                     {/* Employee time tracker history start */}
-                    <div className="table-responsive">
-                        <table className="table table-striped table-hover employee-table">
+                    <div className="table-responsive" style={{ width: '100%' }}>
+                        <table className="table table-striped table-hover">
                             <thead>
                                 <tr>
                                     <th scope="col">Date</th>
@@ -207,7 +209,15 @@ const TrackerHistory = (props) => {
                                                         <button onClick={(e) => { updateTracker(e, value) }} className='btn btn-outline-success'>Update</button>
                                                     </td>
                                                     <td>
-                                                        <button className='btn btn-outline-danger' onClick={(e) => { deleteData(e, value._id) }}>Delete</button>
+                                                        {clicked ? (
+                                                            <>
+                                                                <button className='btn btn-outline-danger'>Delete</button>
+                                                            </>
+                                                        ) : (
+                                                            <>
+                                                                <button className='btn btn-outline-danger' onClick={(e) => { deleteData(e, value._id); setClicked(true) }}>Delete</button>
+                                                            </>
+                                                        )}
                                                     </td>
                                                 </>
                                             )}
