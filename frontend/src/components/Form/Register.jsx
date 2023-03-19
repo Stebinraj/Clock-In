@@ -104,7 +104,7 @@ const Register = (props) => {
             e.preventDefault();
 
             if (validateName() & validateEmail() & validatePassword() & validateRole()) {
-                const added = await axios.post('http://localhost:5000/api/register', { name, username, password, role, token });
+                const added = await axios.post('/api/register', { name, username, password, role, token });
                 if (added.data.verifyToken) {
                     alert("Employee Added Successfully");
                     navigate('/dashboard', { replace: true });

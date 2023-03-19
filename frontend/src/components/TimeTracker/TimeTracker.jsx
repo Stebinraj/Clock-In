@@ -47,7 +47,7 @@ const TimeTracker = (props) => {
         setRunning(false);
         setTime(0);
         setIsDisabled(false);
-        let post = await axios.post('http://localhost:5000/api/tracker', { empId, project, task, jobDescription, modeOfWork, startTime, endTime: new Date(), token });
+        let post = await axios.post('/api/tracker', { empId, project, task, jobDescription, modeOfWork, startTime, endTime: new Date(), token });
         if (post) {
             setProject('');
             setTask('');
@@ -62,7 +62,7 @@ const TimeTracker = (props) => {
         setClicked(false);
         setRunning(false);
         setIsDisabled(true);
-        await axios.post('http://localhost:5000/api/tracker', { empId, project, task, jobDescription, modeOfWork, startTime, endTime: new Date(), token });
+        await axios.post('/api/tracker', { empId, project, task, jobDescription, modeOfWork, startTime, endTime: new Date(), token });
         setReload(true);
     };
 
@@ -127,14 +127,14 @@ const TimeTracker = (props) => {
 
         // fetch project
         const getProject = async () => {
-            let project = await axios.post('http://localhost:5000/api/projects', { token });
+            let project = await axios.post('/api/projects', { token });
             setProjectData(project.data);
         }
         getProject();
 
         // fetch task
         const getTask = async () => {
-            let task = await axios.post('http://localhost:5000/api/tasks', { token });
+            let task = await axios.post('/api/tasks', { token });
             setTaskData(task.data);
         }
         getTask();

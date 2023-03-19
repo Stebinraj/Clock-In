@@ -104,7 +104,7 @@ const EmployeeUpdate = (props) => {
         try {
             e.preventDefault();
             if (validateName() & validateEmail() & validatePassword() & validateRole()) {
-                const updated = await axios.put(`http://localhost:5000/api/users/${_id}`, { name, username, password, role, token });
+                const updated = await axios.put(`/api/users/${_id}`, { name, username, password, role, token });
                 if (updated) {
                     alert('Updated Successfully');
                     navigate('/dashboard', { replace: true });

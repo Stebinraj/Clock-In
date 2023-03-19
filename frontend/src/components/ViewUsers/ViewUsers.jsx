@@ -13,7 +13,7 @@ const ViewUsers = (props) => {
     const onDelete = async (e, _id) => {
         try {
             e.preventDefault();
-            const deleteData = await axios.delete(`http://localhost:5000/api/delete/${_id}`);
+            const deleteData = await axios.delete(`/api/delete/${_id}`);
             if (deleteData) {
                 alert('Deleted Successfully')
                 getData();
@@ -29,7 +29,7 @@ const ViewUsers = (props) => {
     // fetch employee list after deleted specific employee
     const getData = async () => {
         try {
-            const response = await axios.post('http://localhost:5000/api/users', { token });
+            const response = await axios.post('/api/users', { token });
             setApiData(response.data);
             setClicked(false);
         } catch (error) {
@@ -68,7 +68,7 @@ const ViewUsers = (props) => {
     useEffect(() => {
         const getData = async () => {
             try {
-                const response = await axios.post('http://localhost:5000/api/users', { token });
+                const response = await axios.post('/api/users', { token });
                 setApiData(response.data);
             } catch (error) {
                 console.log(error.message);

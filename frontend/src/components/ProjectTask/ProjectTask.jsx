@@ -21,7 +21,7 @@ const ProjectTask = (props) => {
         try {
             e.preventDefault();
             if (validateProject()) {
-                const response = await axios.post('http://localhost:5000/api/project', { projectLabel, token });
+                const response = await axios.post('/api/project', { projectLabel, token });
                 console.log(response);
                 if (response.data.projectLabel) {
                     alert('Project Added Successfully');
@@ -42,7 +42,7 @@ const ProjectTask = (props) => {
         try {
             e.preventDefault();
             if (validateTask()) {
-                const response = await axios.post('http://localhost:5000/api/task', { taskLabel, token });
+                const response = await axios.post('/api/task', { taskLabel, token });
                 if (response.data.taskLabel) {
                     alert('Task Added Successfully');
                     setTaskLabel('');
@@ -57,7 +57,7 @@ const ProjectTask = (props) => {
     // fetch project
     const getProject = async () => {
         try {
-            const project = await axios.post('http://localhost:5000/api/projects', { token });
+            const project = await axios.post('/api/projects', { token });
             setProjectData(project.data);
         } catch (error) {
             console.log(error.message);
@@ -67,7 +67,7 @@ const ProjectTask = (props) => {
     // fetch task
     const getTask = async () => {
         try {
-            const task = await axios.post('http://localhost:5000/api/tasks', { token });
+            const task = await axios.post('/api/tasks', { token });
             setTaskData(task.data);
         } catch (error) {
             console.log(error.message);
@@ -117,7 +117,7 @@ const ProjectTask = (props) => {
         // fetch project
         const getProject = async () => {
             try {
-                const project = await axios.post('http://localhost:5000/api/projects', { token });
+                const project = await axios.post('/api/projects', { token });
                 setProjectData(project.data);
             } catch (error) {
                 console.log(error.message);
@@ -128,7 +128,7 @@ const ProjectTask = (props) => {
         // fetch task
         const getTask = async () => {
             try {
-                const task = await axios.post('http://localhost:5000/api/tasks', { token });
+                const task = await axios.post('/api/tasks', { token });
                 setTaskData(task.data);
             } catch (error) {
                 console.log(error.message);

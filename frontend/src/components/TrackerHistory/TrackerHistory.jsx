@@ -24,7 +24,7 @@ const TrackerHistory = (props) => {
     const handleRange = async (e) => {
         try {
             e.preventDefault();
-            const response = await axios.post(`http://localhost:5000/api/${_id}/${range}`, { token });
+            const response = await axios.post(`/api/${_id}/${range}`, { token });
             const result = await response.data;
             setApiData(result.data);
             setTotal(result.total);
@@ -38,7 +38,7 @@ const TrackerHistory = (props) => {
             e.preventDefault();
             const start = startDate.toISOString();
             const end = endDate.toISOString();
-            const response = await axios.post(`http://localhost:5000/api/${_id}/${start}/${end}`, { token });
+            const response = await axios.post(`/api/${_id}/${start}/${end}`, { token });
             const result = await response.data;
             setApiData(result.data);
             setTotal(result.total);
@@ -66,7 +66,7 @@ const TrackerHistory = (props) => {
     const deleteData = async (e, _id) => {
         try {
             e.preventDefault();
-            const deleted = await axios.delete(`http://localhost:5000/api/tracker/${_id}`);
+            const deleted = await axios.delete(`/api/tracker/${_id}`);
             if (deleted) {
                 alert('Deleted Successfully');
                 getData();
@@ -82,7 +82,7 @@ const TrackerHistory = (props) => {
     // fetch data after deleted specific employee tracker history
     const getData = async () => {
         try {
-            const response = await axios.post(`http://localhost:5000/api/tracker/${_id}`, { token });
+            const response = await axios.post(`/api/tracker/${_id}`, { token });
             setApiData(await response.data);
             setClicked(false);
         } catch (error) {
@@ -109,7 +109,7 @@ const TrackerHistory = (props) => {
         // fetch tracker history
         const getData = async () => {
             try {
-                const response = await axios.post(`http://localhost:5000/api/tracker/${_id}`, { token });
+                const response = await axios.post(`/api/tracker/${_id}`, { token });
                 setApiData(response.data);
             } catch (error) {
                 console.log(error.message);

@@ -104,7 +104,7 @@ const TrackerUpdate = (props) => {
         try {
             e.preventDefault();
             if (validateProject() & validateTask() & validateModeOfWork() & validateJobDescription()) {
-                const updatedTracker = axios.put(`http://localhost:5000/api/tracker/${_id}`, { project, task, jobDescription, modeOfWork, token });
+                const updatedTracker = axios.put(`/api/tracker/${_id}`, { project, task, jobDescription, modeOfWork, token });
                 if (updatedTracker) {
                     alert('Updated Successfully');
                     navigate('/analysis', { replace: true });

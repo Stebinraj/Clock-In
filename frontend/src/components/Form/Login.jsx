@@ -64,7 +64,7 @@ const Login = () => {
             e.preventDefault();
 
             if (validateEmail() & validatePassword()) {
-                const response = await axios.post('http://localhost:5000/api/login', { username, password });
+                const response = await axios.post('/api/login', { username, password });
 
                 if ((response.data.token && response.data.user.role === "user") || (response.data.token && response.data.user.role === "admin")) {
                     sessionStorage.setItem('Id', response.data.user._id);
